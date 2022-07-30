@@ -114,7 +114,7 @@ export default class Chat extends React.Component {
               messages: [],
               user: {
                 _id: user.uid,
-                name: name,
+                name: {name},
               },
             });
             const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
@@ -150,8 +150,9 @@ export default class Chat extends React.Component {
   }
 
   // Add message to Firestore
-  addMessages = (message) => {
+  addMessages = (message) => {console.log(message);
     addDoc(messagesRef, {
+      
       uid: this.state.uid,
       _id: message._id,
       text: message.text || '',
