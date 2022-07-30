@@ -150,7 +150,8 @@ export default class Chat extends React.Component {
   }
 
   // Add message to Firestore
-  addMessages = (message) => {console.log(message);
+  addMessages = (messages) => {
+    const message = messages[0]
     addDoc(messagesRef, {
       
       uid: this.state.uid,
@@ -211,7 +212,8 @@ export default class Chat extends React.Component {
                   messages={this.state.messages}
                   onSend={(messages) => this.addMessages(messages)}
                   user={{
-                    _id: 1,
+                    _id: this.state.uid,
+                    name: this.state.user.name
                   }}
                 />
         
