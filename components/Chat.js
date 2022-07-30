@@ -114,7 +114,7 @@ export default class Chat extends React.Component {
               messages: [],
               user: {
                 _id: user.uid,
-                name: {name},
+                name: name,
               },
             });
             const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
@@ -128,7 +128,7 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
    
       
-      // this.authUnsubscribe();
+      this.authUnsubscribe;
     }
   
 
