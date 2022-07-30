@@ -19,6 +19,13 @@ import {getAuth, onAuthStateChanged, signInAnonymously} from 'firebase/auth';
 // const firebase = require('firebase');
 // require('firebase/firestore');
 
+
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {  global.btoa = encode }
+
+if (!global.atob) { global.atob = decode }
+
 const firebaseConfig = {
     apiKey: "AIzaSyDhvK9oHmouNpSo8yaXKK_44cjkwyaE-dU",
            authDomain: "chat-app-e1449.firebaseapp.com",
@@ -121,11 +128,11 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
    
       
-      this.authUnsubscribe();
+      // this.authUnsubscribe();
     }
   
 
-  // Add message to the state
+ // Add message to the state
   onSend(messages = []) {
     this.setState(
       (previousState) => ({
@@ -144,7 +151,7 @@ export default class Chat extends React.Component {
 
   // Add message to Firestore
   addMessages = (message) => {
-    this.messagesRef.add({
+    addDoc(messagesRef, {
       uid: this.state.uid,
       _id: message._id,
       text: message.text || '',
@@ -201,7 +208,7 @@ export default class Chat extends React.Component {
                 <GiftedChat
                 renderBubble={this.renderBubble.bind(this)}
                   messages={this.state.messages}
-                  onSend={(messages) => this.onSend(messages)}
+                  onSend={(messages) => this.addMessages(messages)}
                   user={{
                     _id: 1,
                   }}
