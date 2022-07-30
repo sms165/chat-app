@@ -8,14 +8,15 @@ import {
   TouchableOpacity
 } from "react-native";
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
-//  import 'firebase/firestore';
-// import { Firestore } from "firebase/firestore";
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getFirestore, collection, onSnapshot, addDoc, query, where, initializeFirestore } from "firebase/firestore";
 
-const firebase = require('firebase');
-require('firebase/firestore');
+// import firebase from "firebase/compat/app";
+// import "firebase/compat/auth";
+// const firebase = require('firebase');
+// require('firebase/firestore');
 
 const firebaseConfig = {
     apiKey: "AIzaSyDhvK9oHmouNpSo8yaXKK_44cjkwyaE-dU",
@@ -46,14 +47,14 @@ export default class Chat extends React.Component {
       isConnected: null,
     };
 
-    // Set up firebase
-    
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-
+  
+ // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db= initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
     // Reference to Firestore collection
-    this.referenceChatMessages = firebase.firestore().collection('messages');
+    this.referenceChatMessages = db.collection('messages');
   }
 
   onCollectionUpdate = (querySnapshot) => {
@@ -99,7 +100,7 @@ export default class Chat extends React.Component {
           .auth()
           .onAuthStateChanged(async (user) => {
             if (!user) {
-              firebase.auth().signInAnonymously();
+              await signInAnonymously(auth);
             }
             this.setState({
               uid: user.uid,
