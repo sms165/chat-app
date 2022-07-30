@@ -11,7 +11,7 @@ import { GiftedChat, Bubble } from "react-native-gifted-chat";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getFirestore, collection, onSnapshot, addDoc, query, where, initializeFirestore } from "firebase/firestore";
+import {getFirestore, collection, onSnapshot, addDoc, query, where, initializeFirestore, orderBy } from "firebase/firestore";
 import {getAuth, onAuthStateChanged, signInAnonymously} from 'firebase/auth';
 
 // import firebase from "firebase/compat/app";
@@ -31,7 +31,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db= initializeFirestore(app, {
-//   experimentalForceLongPolling: true,
+  experimentalForceLongPolling: true,
 });
 
 // Create reference to the messages collection on firestore
@@ -101,6 +101,7 @@ export default class Chat extends React.Component {
            await signInAnonymously(auth);
            console.log(user)
          }
+         if(user){
             this.setState({
               uid: user.uid,
               messages: [],
@@ -109,17 +110,17 @@ export default class Chat extends React.Component {
                 name: name,
               },
             });
-            this.unsubscribe = this.messagesRef
-              .orderBy('createdAt', 'desc')
-              .onSnapshot(this.onCollectionUpdate);
-          });
+            const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
+             unsubscribe= onSnapshot(userListQuery, this.onCollectionUpdate);
+            
+  }});
       
     
   }
 
   componentWillUnmount() {
    
-      this.unsubscribe();
+      
       this.authUnsubscribe();
     }
   
