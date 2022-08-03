@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Platform,
   KeyboardAvoidingView,
-  TouchableOpacity
+  TouchableOpacity,
+  InputToolbar
 } from "react-native";
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 
@@ -18,6 +19,9 @@ import {getAuth, onAuthStateChanged, signInAnonymously} from 'firebase/auth';
 // import "firebase/compat/auth";
 // const firebase = require('firebase');
 // require('firebase/firestore');
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from '@react-native-community/netinfo';
 
 
 import {decode, encode} from 'base-64'
@@ -87,11 +91,25 @@ export default class Chat extends React.Component {
   
 
   componentDidMount() {
+    this.getMessages;
     // Set name as title chat
     let { name } = this.props.route.params;
     this.props.navigation.setOptions({ title: name });
 
-   
+    NetInfo.fetch().then(connection => {
+      if (connection.isConnected) {
+        console.log('online');
+        this.setState({
+          isConnected:true
+        })
+      } else {
+        console.log('offline');
+        this.setState({
+          isConnected:false
+        })
+      }
+    });
+    
 
         // // Reference to load messages from Firebase
         // this.referenceChatMessages = firebase
@@ -130,6 +148,7 @@ export default class Chat extends React.Component {
       
       this.authUnsubscribe;
     }
+
   
 
  // Add message to the state
@@ -164,6 +183,41 @@ export default class Chat extends React.Component {
     });
   };
 
+
+  //  // Retrieve messages from async storage
+    async getMessages() {
+      let messages = '';
+      try {
+        messages = await AsyncStorage.getItem('messages') || [];
+        this.setState({
+          messages: JSON.parse(messages)
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+  //   //save messages to async storage
+    async saveMessages() {
+      try {
+        await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    
+  //   //Delete messages from async storage (for development purposes only)
+    async deleteMessages() {
+      try {
+        await AsyncStorage.removeItem('messages');
+        this.setState({
+          messages: []
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
   // Customize message bubbles
   renderBubble(props) {
     return (
@@ -179,6 +233,17 @@ export default class Chat extends React.Component {
         }}
       />
     );
+  }
+
+  renderInputToolbar(props) {
+    if (this.state.isConnected == false) {
+    } else {
+      return(
+        <InputToolbar
+        {...props}
+        />
+      );
+    }
   }
 
   
