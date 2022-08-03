@@ -91,7 +91,7 @@ export default class Chat extends React.Component {
   
 
   componentDidMount() {
-    this.getMessages;
+    // this.getMessages;
     // Set name as title chat
     let { name } = this.props.route.params;
     this.props.navigation.setOptions({ title: name });
@@ -119,6 +119,8 @@ export default class Chat extends React.Component {
         // Authenticate user anonymously
         this.authUnsubscribe = 
         auth = getAuth();
+
+        console.log(this.getMessages())
     
         const authUnsubscribe = onAuthStateChanged(auth, async (user) => {
          if (!user) {
@@ -135,8 +137,17 @@ export default class Chat extends React.Component {
                 name: name,
               },
             });
-            const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
-             unsubscribe= onSnapshot(userListQuery, this.onCollectionUpdate);
+            if (this.state.isConnected) {
+              const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
+            unsubscribe= onSnapshot(userListQuery, this.onCollectionUpdate);
+
+             this.deleteMessages()
+             this.saveMessages()
+            }
+            else{
+              this.getMessages();
+            }
+           
             
   }});
       
