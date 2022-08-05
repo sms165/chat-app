@@ -6,9 +6,9 @@ import {
   Platform,
   KeyboardAvoidingView,
   TouchableOpacity,
-  InputToolbar
+  
 } from "react-native";
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -59,7 +59,7 @@ export default class Chat extends React.Component {
         name: '',
         avatar: '',
       },
-      isConnected: null,
+      isConnected: false,
     };
 
   }
@@ -137,6 +137,8 @@ export default class Chat extends React.Component {
                 name: name,
               },
             });
+
+          
             if (this.state.isConnected) {
               const userListQuery = query(messagesRef, orderBy('createdAt', 'desc'));
             unsubscribe= onSnapshot(userListQuery, this.onCollectionUpdate);
@@ -157,7 +159,7 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
    
       
-      this.authUnsubscribe;
+      this.authUnsubscribe();
     }
 
   
@@ -173,7 +175,8 @@ export default class Chat extends React.Component {
         this.saveMessages();
         // Call addMessage with last message in message state
         if (this.state.isConnected === true) {
-          this.addMessages(this.state.messages[0]);
+          this.addMessages(this.state.messages);
+          
         }
       }
     );
@@ -285,8 +288,9 @@ export default class Chat extends React.Component {
         
                 <GiftedChat
                 renderBubble={this.renderBubble.bind(this)}
+                renderInputToolbar={this.renderInputToolbar.bind(this)}
                   messages={this.state.messages}
-                  onSend={(messages) => this.addMessages(messages)}
+                  onSend={(messages) => this.onSend(messages)}
                   user={{
                     _id: this.state.uid,
                     name: this.state.user.name
