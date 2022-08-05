@@ -206,7 +206,7 @@ export default class Chat extends React.Component {
         this.setState({
           messages: JSON.parse(messages)
         });
-        consol.log('messages from storage', messages)
+        console.log('messages from storage', messages)
       } catch (error) {
         console.log(error.message);
       }
