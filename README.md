@@ -40,7 +40,7 @@ I used **React Native** to create this mobile chat app.
 *Database that comes with Google Firebase
 *Eliminates the need to write backend code for database queries
 
-###What challenges did I face, what did I learn?
+### What challenges did I face, what did I learn?
 *As the lessons in CareerFoundry used Firestore v7 and the current version is 9, I had to heavily rely on the Firebase documentation and other sources online. As I had decided it would be better to code an up to date app.
 
 ### Testing the app offline on iOS systems
