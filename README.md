@@ -2,7 +2,7 @@
 ![app screenshot](/assets/chat-app-screenshpt.png)
 
 ### Live view
-** The app is hosted on Expo at (https://expo.dev/@sms165 )
+** The app is hosted on Expo at https://expo.dev/@sms165
 ## Description
 The aim of this project is to build a chat app for mobile devices using React Native. The app will provide users with a chat interface and options to share images and their location.
 
