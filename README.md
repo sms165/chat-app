@@ -43,7 +43,7 @@ I used **React Native** to create this mobile chat app.
 ###What challenges did I face, what did I learn?
 *As the lessons in CareerFoundry used Firestore v7 and the current version is 9, I had to heavily rely on the Firebase documentation and other sources online. As I had decided it would be better to code an up to date app.
 
-###Testing the app offline on iOS systems
+### Testing the app offline on iOS systems
 1. Connect the device using a cable
 2. In the terminal type in ```ifconfig -a``` and copy the ip address of the device
 3. In the terminal type in ```export EXPO_DEVTOOLS_LISTEN_ADDRESS={ipAdress without braces}```
@@ -52,3 +52,10 @@ I used **React Native** to create this mobile chat app.
 6. Then the app can be opened on the device through ExpoGo
 7. While the app is open disconnect from the internet on the device and the computer
 8 In the terminal type in ```r``` this restarts the app in the offline mode, and gets the data from the async storage
+
+### Downloading and opening the app
+1. Download the code from github
+2. Open the Terminal in the directory folder 
+3. In the terminal type in ```npm install``` this installs all the dependencies needed
+4. In the terminal type in ```expo start``` 
+5. Open ExpoGo on the device and scan the QR code to open the app
