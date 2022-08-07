@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, Pressable, ImageBackground, TouchableOp
 
 // Importing the default background image from the assets folder
 import BackgroundImage from "../assets/background-image.png";
-
+import Icon from "../assets/icon.svg";
 
 export default class Start extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class Start extends React.Component {
 
     this.state = {
       name: "",
-      bgColor: this.colors.green,
+      bgColor: "",
     };
   }
 
@@ -42,6 +42,7 @@ export default class Start extends React.Component {
 
           <View style={styles.inputMain}>
             <View style={styles.inputBox}>
+            <Icon />
               <TextInput
                 style={styles.input}
                 onChangeText={(text) => this.setState({ name: text })}
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    marginLeft:10,
     fontSize: 16,
     fontWeight: "300",
     color: "#757083",

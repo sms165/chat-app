@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput,Button } from 'react-native';
 // import the screens
 import Start from './components/Start';
 import Chat from './components/Chat';
+ import CustomActions from './components/CustomActions';
 // import react native gesture handler
 import 'react-native-gesture-handler';
 
@@ -16,6 +17,9 @@ export default class App extends React.Component {
    this.state = { text: '' };
  }
  
+ renderCustomActions = (props) => {
+  return <CustomActions {...props} />
+ }
 
  render() {
    // Create the navigator
