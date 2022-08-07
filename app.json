@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "chat-app",
+    "name": "Chat App",
     "slug": "chat-app",
+    "owner": "sms165",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/background-image-load.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
